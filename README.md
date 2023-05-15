@@ -6,6 +6,6 @@ A Proof-Of-Concept (POC) for the malicious use of extension-based TLDs such as "
 3. The website downloads the correct payload (ie: `company-image.vhdx.zip.exe`
 
 Try it yourself (it won't actually download a malicious payload)
-1. Download [company-image.vhdx.zip](company-image.vhdx.zip)
-2. Download [kali-linux-qemu.qcow2.zip](kali-linux-qemu.qcow2.zip)
+1. Download [company-image.vhdx.zip](https://company-image.vhdx.zip)
+2. Download [kali-linux-qemu.qcow2.zip](https://kali-linux-qemu.qcow2.zip)
 
